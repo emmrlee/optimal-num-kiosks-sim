@@ -1,0 +1,55 @@
+// File: README
+// Author: Emma Lee
+// Date Created: 12/6/2023
+
+IMPORTANT NOTES:
+1) I created 2 versions: one performs one simulation run; the other performs many and generates tables
+2) I changed the implementation of getNServed() so that instead of counting the total # customers
+   served across all kiosks for one simulation (as the instructions intended), each individual kiosk
+   has its own nServed counter (defined as an instance variable in its struct). Thus, to get the total
+   amount of customers served in one simulation, you must add up the nServed counts from all kiosks in the
+   simulation. This helps prevent the nServed variable from getting convoluded when performing
+   multiple simulations in one program (like I do in testDesGT).
+
+How to Compile/Run:
+    To perform one simulation:
+       compile with `make testDes`
+       run with `./testDes m k`
+       	  where m is the number of minutes and k is the number of kiosks
+
+    To perform multiple simulations and generate the output tables:
+       compile with 'make testDesGT`
+       run with `./testDes m`
+       	   where m is the number of minutes
+    *This version performs multiple runs for m minutes for various number of kiosks [1, MAX_NUM_KIOSKS]
+    	  The number of runs and the max number of kiosks to test are not customizable by command line.
+	  However, there are macros in place to allow some flexibility. See the documentation inside
+	  `desGenTable.c` for more information.
+	  Currently, the macros are set so that for m minutes, the program will perform 10 runs for each
+	  of 1 to 20 kiosks. (10 runs for 1 kiosk, 10 runs for 2 kiosks, ... 10 runs for 20 kiosks)
+	  
+Known Limitations:
+    The choice to use macros instead of taking command line input for `desGenTable.c` somewhat limits
+    flexibility. The user will need write access to change anything other than the num minutes.
+
+Reflection:
+    This assignment had many moving parts which broke my brain at times. Regardless, I thought it was
+    super fun! I like taking on bigger projects like this since the results make me happy. I'm glad I
+    took on the challenge to have my program print out the tables for me. Formatting definitely took
+    me a while, but if I didn't create `desGenTable.c`, I wouldn't have found the bug where running
+    multiple simulations in a single program incorrectly incremented getNServed() (before my changes).
+    For instance, I noticed that in my tables, 90 customers would arrive, but getNServed() would be 1000
+    or some large number (since previously the same global nServed variable would just get incremented by
+    each new simulation).
+
+Question Responses:
+*) From the tables, we can see that for 60 minutes, 12 is the optimal number of kiosks to keep the
+   queue less than 3 customers on average.
+1) Doubling the amount of customers that can arrive in a minute (from 3 to 6) will result in longer
+   average queue lengths. To mitigate this, one could (and should) increase the number of kiosks.
+   My results from testDesGT show that the optimal # of kiosks to keep Qlen < 3 doubles from 12 to 24.
+2) If the time taken at a kiosk could be reduced to half, average queue lengths will be shorter. Less
+   kiosks would be needed to meet that optimal number. Results show that the optimal # kiosks is 8.
+   (6 and 7 were close, but had one run each with an average Qlen of 4).
+3) If 15% of the kiosks are out of service, you would need 15% more kiosks to get to the optimal #.
+   So, if the optimal # is 12, you'd need about 14 kiosks to keep Qlen under 3 on average.

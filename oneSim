@@ -1,0 +1,13 @@
+Script started on 2023-12-06 19:43:35-05:00 [TERM="xterm-256color" TTY="/dev/pts/5" COLUMNS="107" LINES="51"]
+erlee@alex:~/cs223/Assignment6$ make test[K[K[K[KtestDes
+cc    -c -o des.o des.c
+gcc -o testDes des.o kiosk.o customer.o queue.o list.o node.o
+erlee@alex:~/cs223/Assignment6$ ./testDes 10 4
+Simulation: 10 minutes, with 4 kiosks
+11 customers arrived.
+4 customers served.
+Average queue length: 2.2
+erlee@alex:~/cs223/Assignment6$ exit
+exit
+
+Script done on 2023-12-06 19:43:50-05:00 [COMMAND_EXIT_CODE="0"]
